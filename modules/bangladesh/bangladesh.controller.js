@@ -18,4 +18,21 @@ const addTouristSpot = async (req, res) => {
   }
 };
 
-export { addTouristSpot };
+const getAllTouristSpots = async (req, res) => {
+  try {
+    const result = await bangladeshCollection.find().toArray();
+    res.status(200).json({
+      success: true,
+      message: "Found all tourist spot data",
+      data: result,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Failed to fetch spots",
+      error: error,
+    });
+  }
+};
+
+export { addTouristSpot, getAllTouristSpots };
