@@ -46,6 +46,21 @@ async function run() {
     });
 
     // Get a single tourist spot by ID
+    app.get("/api/tourist-spots/:id", async (req, res) => {
+      try {
+        const id = req.params.id;
+        const spot = await touristSpotCollection.findOne({
+          _id: new ObjectId(id),
+        });
+        if (!spot) {
+          return res.status(404).json({ message: "Tourist spot not found" });
+        }
+        res.status(200).json(spot);
+      } catch (error) {
+        console.error("Error fetching tourist spot by ID:", error);
+        res.status(500).json({ message: "Internal server error" });
+      }
+    });
 
     // Insert a new tourist spot
     app.post("/api/tourist-spots", async (req, res) => {
